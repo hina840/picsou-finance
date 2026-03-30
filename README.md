@@ -69,7 +69,9 @@ cp .env.example .env
 | `POSTGRES_PASSWORD` | Mot de passe PostgreSQL | Chaîne aléatoire forte |
 | `JWT_SECRET` | Clé de signature JWT (min. 32 car.) | `openssl rand -base64 48` |
 | `APP_USERNAME` | Identifiant de connexion | Votre choix |
-| `APP_PASSWORD_HASH` | Hash bcrypt du mot de passe | `htpasswd -bnBC 12 "" VOTRE_MDP \| tr -d ':\n'` |
+| `APP_PASSWORD_HASH` | Hash bcrypt du mot de passe | `htpasswd -bnBC 12 "" VOTRE_MDP \| tr -d ':\r\n'` |
+
+> **Important :** le hash bcrypt contient des caractères `$`. Dans le fichier `.env` ils sont écrits tels quels (pas de quotes). Ne jamais faire `export APP_PASSWORD_HASH=$2a$...` dans un shell — les `$` seraient interprétés. Utilisez toujours le fichier `.env` avec Docker Compose, ou exportez avec des guillemets simples : `export APP_PASSWORD_HASH='$2a$12$...'`.
 
 Pour la sync Enable Banking (optionnel) :
 
